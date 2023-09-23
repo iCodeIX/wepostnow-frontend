@@ -53,7 +53,7 @@ const SearchUser = () => {
                                         return (
                                             <div key={user._id} className="result-item">
                                                 <Link to={`/profile/${user._id}`} style={searchResultLink}>
-                                                    <img className="search-photo profile-photo icon" src={removePublic(user.profileImg)} alt="user profile" />
+                                                    <img className="search-photo profile-photo icon" src={user.profileImg} alt="user profile" />
                                                     <span className="search-name">{user.username}</span>
                                                 </Link>
                                             </div>
