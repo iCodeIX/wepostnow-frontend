@@ -38,7 +38,7 @@ const Main = () => {
                     console.log(err);
                 })
         } catch (error) {
-            console.log("post error : ", error)
+            console.log("post error : ",error)
         }
 
     }
