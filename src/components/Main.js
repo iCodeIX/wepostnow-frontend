@@ -30,7 +30,7 @@ const Main = () => {
 
     const fetchAllPosts = async () => {
         try {
-            await axios.post("/posts")
+            await axios.get("/posts")
                 .then((response) => {
                     setPosts(response.data);
                 })

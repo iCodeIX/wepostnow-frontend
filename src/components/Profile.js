@@ -107,7 +107,7 @@ const Profile = () => {
 
     const fetchAllPosts = async () => {
 
-        await axios.post("/posts", { userId: id })
+        await axios.get("/posts", { userId: id })
             .then((response) => {
                 setUserPosts(response.data);
             })
