@@ -4,7 +4,7 @@ import App from './components/App';
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from 'axios';
 
-axios.defaults.baseURL = "https://wepostnow-api.vercel.app";
+axios.defaults.baseURL = process.env.API_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
