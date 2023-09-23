@@ -34,12 +34,6 @@ const SearchUser = () => {
         fontSize: "10px",
     }
 
-
-    function removePublic(src) {
-        return String(src).replace("/public", "");
-    }
-
-
     return (
         <form className="search-form">
             <div className="search-form-input">
