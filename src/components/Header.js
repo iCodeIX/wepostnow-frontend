@@ -78,19 +78,14 @@ const SearchUser = () => {
 const Header = () => {
     const id = localStorage.getItem('id');
     const user = useContext(UserContext);
-    let profileImg = localStorage.getItem('profileImg');
-    profileImg = profileImg.replace("/public", "");
-
-    function removePublic(src) {
-        return String(src).replace("/public", "");
-    }
+ 
 
     return (
         <header>
             <img src={logo} className="logo icon" alt="site logo" />
             <SearchUser />
             <Link to={`/profile/${id}`}>
-                <img className="profile-photo icon" src={user && removePublic(user.profileImg)} alt="user profile" />
+                <img className="profile-photo icon" src={user && user.profileImg} alt="user profile" />
             </Link>
         </header>
     )
