@@ -78,7 +78,7 @@ const SearchUser = () => {
 const Header = () => {
     const id = localStorage.getItem('id');
     const user = useContext(UserContext);
- 
+
 
     return (
         <header>

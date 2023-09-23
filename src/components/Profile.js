@@ -65,7 +65,7 @@ const UpdateProfile = ({ c_id, setToogleUpdate, bio, profileImg, fetchUser, fetc
 
             <button className="updatecancel-btn" onClick={() => setToogleUpdate(false)}><CloseOutlinedIcon /> </button>
             <div className="photoprev-container">
-                <img src={photoPrevFile !== null && photoPrevUrl} alt="profile" />
+                <img src={photoPrevFile !== null ? photoPrevUrl : profileImg} alt="profile" />
             </div>
             <form className="updateProfile-form" onSubmit={updateProfile}>
                 <input className="updatedPhotoInput" type="file" name="profileImg" onChange={handleUpdateForm} />
@@ -107,17 +107,13 @@ const Profile = () => {
 
     const fetchAllPosts = async () => {
 
-        await axios.get("/posts", { userId: id })
+        await axios.get("/posts/userposts/" + id)
             .then((response) => {
                 setUserPosts(response.data);
             })
             .catch((err) => {
                 console.log(err);
             })
-    }
-
-    function removePublic(src) {
-        return String(src).replace("/public", "");
     }
 
     return (
@@ -131,9 +127,9 @@ const Profile = () => {
                             }
 
                             {
-                                toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} profileImg={removePublic(user.profileImg)} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
+                                toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
                             }
-                            <img className="user-profile-photo" src={removePublic(user.profileImg)} alt="profile" />
+                            <img className="user-profile-photo" src={user.profileImg} alt="profile" />
                             <div className="details-text-container">
                                 <p className="profile-name">
                                     <img src={user.gender === "male" ? Male :

@@ -10,9 +10,6 @@ const UserPosts = () => {
     const userId = localStorage.getItem('id');
     const userPosts = useContext(UserPostsContext);
 
-    function removePublic(src) {
-        return String(src).replace("/public", "");
-    }
 
     function getDate(str) {
         const date = new Date(str.slice(0, 10));
@@ -61,7 +58,7 @@ const UserPosts = () => {
 
                                     <div className="link-container">
                                         <Link to={`/profile/${post["user"]._id}`} style={profileLinkStyle}>
-                                            <img className="post-user--photo" alt={post["user"].username} src={removePublic(post["user"].profileImg)} />
+                                            <img className="post-user--photo" alt={post["user"].username} src={post["user"].profileImg} />
                                             <span className="post-username">{post["user"].username}</span>
                                         </Link>
                                     </div>
