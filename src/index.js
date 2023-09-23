@@ -4,7 +4,7 @@ import App from './components/App';
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.API_URL;
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
