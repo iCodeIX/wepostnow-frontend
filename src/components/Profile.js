@@ -9,23 +9,27 @@ import Neutral from "./images/neutral.png";
 import Male from "./images/male.png";
 import Female from "./images/female.png";
 import { UserPostsContext } from "./UserContext";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-const UpdateProfile = ({ c_id, setToogleUpdate, bio, profileImg, fetchUser, fetchAllPosts }) => {
+const UpdateProfile = ({ c_id, setToogleUpdate, bio, gender, profileImg, fetchUser, fetchAllPosts }) => {
     const [photoPrevFile, setPhotoPrevFile] = useState(null);
-
-    const [userProfile, setUserProfile] = useState({
+    const [showUpdatePassword, setShowUpdatePassword] = useState(false);
+    const [updateForm, setUpdateForm] = useState({
         id: c_id,
         bio: bio,
-        profileImg: profileImg
+        profileImg: profileImg,
+        gender: gender
     });
+
 
     const photoPrevUrl = photoPrevFile !== null && URL.createObjectURL(photoPrevFile);
 
     const updateProfile = (e) => {
         e.preventDefault();
-        axios.post("/update-profile", userProfile, { headers: { 'Content-Type': 'multipart/form-data' } })
+        axios.post("/update-profile", updateForm, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then((response) => {
-                setUserProfile(response.data);
+                setUpdateForm(response.data);
                 setToogleUpdate(false);
                 fetchUser();
                 fetchAllPosts();
@@ -42,8 +46,8 @@ const UpdateProfile = ({ c_id, setToogleUpdate, bio, profileImg, fetchUser, fetc
         let bio = e.target.value;
 
         if (e.target.name === "profileImg") {
-            setUserProfile({
-                ...userProfile,
+            setUpdateForm({
+                ...updateForm,
                 "profileImg": e.target.files[0]
             })
 
@@ -52,11 +56,21 @@ const UpdateProfile = ({ c_id, setToogleUpdate, bio, profileImg, fetchUser, fetc
             )
 
         } else {
-            setUserProfile({
-                ...userProfile,
+            setUpdateForm({
+                ...updateForm,
                 bio
             })
         }
+    }
+
+    const handleGenderChange = (e) => {
+        const gender = e.target.value;
+        setUpdateForm(
+            {
+                ...updateForm,
+                gender,
+            }
+        )
     }
 
     return (
@@ -69,15 +83,82 @@ const UpdateProfile = ({ c_id, setToogleUpdate, bio, profileImg, fetchUser, fetc
             </div>
             <form className="updateProfile-form" onSubmit={updateProfile}>
                 <input className="updatedPhotoInput" type="file" name="profileImg" onChange={handleUpdateForm} />
+                <div className="form-input-reg">
+                    <label>Gender</label>
+                    <div className="gender-radio-btns">
+                        <input type="radio" name="gender" value="male" onChange={handleGenderChange} checked={updateForm.gender === "male"} /><label className="gender-label">Male</label>
+                        <input type="radio" name="gender" value="female" onChange={handleGenderChange} checked={updateForm.gender === "female"} /><label className="gender-label">Female</label>
+                        <input type="radio" name="gender" value="neutral" onChange={handleGenderChange} checked={updateForm.gender === "neutral"} /><label className="gender-label">Neutral</label>
+                    </div>
+                </div>
                 <label>Bio:</label>
-                <textarea className="updatedBioTextArea" name="updatedBio" value={userProfile.bio} onChange={handleUpdateForm}></textarea>
-                <button className="updateProfile-btn" type="submit">UPDATE</button>
-            </form>
+                <textarea className="updatedBioTextArea" name="updatedBio" value={updateForm.bio} onChange={handleUpdateForm}></textarea>
+                <button className="updateProfile-btn" type="submit">Update</button>
 
+            </form>
+            <button className="change-pass-toogle-btn" onClick={() => setShowUpdatePassword(!showUpdatePassword)}>Change Password?</button>
+            {
+                showUpdatePassword && (<UpdatePassword id={updateForm.id} />)
+            }
         </div>
     )
 }
 
+const UpdatePassword = ({ id }) => {
+    const [passwordShow, setPasswordShow] = useState(false);
+    const [passwordForm, setPasswordForm] = useState({
+        newPassword: "",
+        oldPassword: "",
+        userId: id
+    });
+    const [displayChangePassStatus, setDisplayChangePassStatus] = useState("");
+
+
+    const handlePasswordChangeForm = (e) => {
+        const { name, value } = e.target;
+        setPasswordForm({
+            ...passwordForm,
+            [name]: value
+        }
+
+        )
+    }
+
+
+    const updatePassword = (e) => {
+        e.preventDefault();
+        setDisplayChangePassStatus("");
+        const checkSuccessUpdate = axios.post("/update-password", passwordForm)
+            .catch((err) => {
+                setDisplayChangePassStatus(err.response.data.message);
+            })
+
+        if (checkSuccessUpdate) {
+            setDisplayChangePassStatus("Password change success! You will be logout in 3scs!")
+        }
+
+    }
+    return (
+        <form className="change-pass-form" type="submit" onSubmit={updatePassword}>
+            {displayChangePassStatus && (<p className="password-status-msg">{displayChangePassStatus}</p>)}
+            <div className="form-input-update-pass">
+                <label>Old password:</label>
+                <input type="password" value={passwordForm.oldPassword} onChange={handlePasswordChangeForm} name="oldPassword" />
+                <div className="password-visibility-container">
+                    <label htmlFor="password" className="text-light">New Password</label>
+                    <span className="visibility-icon" onClick={() => setPasswordShow(!passwordShow)}>
+                        {
+                            passwordShow ? <VisibilityIcon /> : <VisibilityOffIcon />
+                        }
+                    </span>
+                </div>
+
+                <input type={passwordShow ? "text" : "password"} id="password" value={passwordForm.newPassword} onChange={handlePasswordChangeForm} name="newPassword" />
+            </div>
+            <button className="change-pass-btn">Click to update</button>
+        </form>
+    )
+}
 
 const Profile = () => {
     const c_id = localStorage.getItem("id");
@@ -127,7 +208,7 @@ const Profile = () => {
                             }
 
                             {
-                                toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
+                                toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} gender={user.gender} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
                             }
                             <img className="user-profile-photo" src={user.profileImg} alt="profile" />
                             <div className="details-text-container">
