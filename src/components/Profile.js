@@ -129,13 +129,15 @@ const UpdatePassword = ({ id }) => {
         e.preventDefault();
         setDisplayChangePassStatus("");
         const checkSuccessUpdate = axios.post("/update-password", passwordForm)
+            .then((response) => {
+                if (response.status === 200) {
+                    setDisplayChangePassStatus("Password change success! You will be logout in 3scs!")
+                }
+            })
             .catch((err) => {
                 setDisplayChangePassStatus(err.response.data.message);
             })
 
-        if (checkSuccessUpdate) {
-            setDisplayChangePassStatus("Password change success! You will be logout in 3scs!")
-        }
 
     }
     return (
