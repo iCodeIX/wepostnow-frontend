@@ -3,14 +3,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import "./styles/Profile.css";
 import UserPosts from "./UserPosts";
+import { UserPostsContext } from "./UserContext";
+
+//icons and images
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Neutral from "./images/neutral.png";
 import Male from "./images/male.png";
 import Female from "./images/female.png";
-import { UserPostsContext } from "./UserContext";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
+//helper functions 
+import { validatePassword } from "../utility/utils";
 
 const UpdateProfile = ({ c_id, setToogleUpdate, bio, gender, profileImg, fetchUser, fetchAllPosts }) => {
     const [photoPrevFile, setPhotoPrevFile] = useState(null);
@@ -127,19 +132,32 @@ const UpdatePassword = ({ id }) => {
 
     const updatePassword = (e) => {
         e.preventDefault();
-        setDisplayChangePassStatus("");
-        const checkSuccessUpdate = axios.post("/update-password", passwordForm)
-            .then((response) => {
-                if (response.status === 200) {
-                    setDisplayChangePassStatus("Password change success! You will be logout in 3scs!")
-                }
-            })
-            .catch((err) => {
-                setDisplayChangePassStatus(err.response.data.message);
-            })
 
-
+        if (validateFormPassword()) {
+            setDisplayChangePassStatus("");
+            const checkSuccessUpdate = axios.post("/update-password", passwordForm)
+                .then((response) => {
+                    if (response.status === 200) {
+                        setDisplayChangePassStatus("Password change success! You will be logout in 3scs!")
+                    }
+                })
+                .catch((err) => {
+                    setDisplayChangePassStatus(err.response.data.message);
+                })
+        }
     }
+
+    const validateFormPassword = () => {
+
+        const validatePasswordResult = validatePassword(passwordForm.newPassword);
+        if (validatePasswordResult) {
+            setDisplayChangePassStatus(validatePasswordResult);
+            return false;
+        }
+
+        return true;
+    }
+
     return (
         <form className="change-pass-form" type="submit" onSubmit={updatePassword}>
             {displayChangePassStatus && (<p className="password-status-msg">{displayChangePassStatus}</p>)}

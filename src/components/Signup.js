@@ -3,9 +3,13 @@ import axios from "axios";
 import { useState } from "react";
 import "./styles/Signup.css";
 import { useNavigate } from "react-router-dom";
+
+//icons
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
+//helper functions
+import { validateUsername, validateEmail, validatePassword } from "../utility/utils";
 
 const Signup = () => {
     const [createForm, setCreateForm] = useState({
@@ -57,7 +61,7 @@ const Signup = () => {
 
     const createUser = async (e) => {
         e.preventDefault();
-    
+
         if (handleFormValidation()) {
             try {
                 const userCreate = await axios.post("/signup", createForm, { headers: { 'Content-Type': 'multipart/form-data' } })
@@ -74,6 +78,7 @@ const Signup = () => {
                     navigate('/main');
                     localStorage.setItem('id', userCreate._id);
                 }
+
             } catch (error) {
                 console.log(error);
             }
@@ -82,21 +87,16 @@ const Signup = () => {
     }
 
     const handleFormValidation = () => {
+        let validateUsernameResult = validateUsername(createForm.username);
+        let validateEmailResult = validateEmail(createForm.email);
+        let validatePasswordResult = validatePassword(createForm.password);
 
-        if (!createForm.username) {
-            setError(`Username cannot be empty!`);
-        } else if (createForm.username.match(/[^A-z0-9_-]/g)) {
-            setError(`Username must have no special symbols other than _ and - `);
-        } else if (createForm.username.length < 4) {
-            setError(`Username must be four(4) characters or above!`);
-        } else if (!createForm.email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(createForm.email)) {
-            setError("Email cannot be empty! No special symbols other than _ , . and @!")
-        } else if (createForm.password.match(/[^A-z0-9.]/g)) {
-            setError(`Password must have no special symbols other than dot (.)!`);
-        } else if (!createForm.password) {
-            setError(`Password cannot be empty!`);
-        } else if (createForm.password.length < 6) {
-            setError(`Password must be six(6) characters or above!`);
+        if (validateUsernameResult) {
+            setError(validateUsernameResult);
+        } else if (validateEmailResult) {
+            setError(validateEmailResult);
+        } else if (validatePasswordResult) {
+            setError(validatePasswordResult);
         } else {
             setShowError(false);
             return true;

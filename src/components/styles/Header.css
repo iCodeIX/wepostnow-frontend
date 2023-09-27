@@ -31,19 +31,23 @@ header {
 
 .search-icon {
     background: var(--white-color);
-    padding: 4px 7px;
+    height: 35px;
     border-radius: 25px 0 0 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
 }
 
 
 .search-input {
-    padding: 8px;
-    width: 210px;
+    width: 100%;
     font-size: 14px;
     border-radius: 0 25px 25px 0;
     border: 1px solid var(--white-color);
     background: var(--white-color);
     outline: none;
+    height: 35px;
 }
 
 .search-input :focus {

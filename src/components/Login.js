@@ -3,6 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/Login.css";
 
+//icons 
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 const Login = () => {
 
     const navigate = useNavigate();
@@ -15,6 +19,8 @@ const Login = () => {
 
     const [wrongPassDisp, setWrongPassDisp] = useState(false);
     const [error, setError] = useState("");
+    const [passwordShow, setPasswordShow] = useState(false);
+
     const handleLoginFormChange = (e) => {
 
         const { name, value } = e.target;
@@ -50,8 +56,6 @@ const Login = () => {
                     navigate('/main');
                     localStorage.setItem('id', userCheck.user._id);
                     localStorage.setItem('profileImg', userCheck.user.profileImg);
-                    console.log(userCheck.user);
-
                 } else {
                     setWrongPassDisp(true);
                 }
@@ -95,8 +99,16 @@ const Login = () => {
                     <input type="text" id="name" value={loginForm.username} onChange={handleLoginFormChange} name="username" />
                 </div>
                 <div className="form-input-login">
-                    <label htmlFor="password" className="text-light">Password</label>
-                    <input type="password" id="password" value={loginForm.password} onChange={handleLoginFormChange} name="password" />
+                    <div className="password-visibility-container">
+                        <label htmlFor="password" className="text-light">Password</label>
+                        <span className="visibility-icon" onClick={() => setPasswordShow(!passwordShow)}>
+                            {
+                                passwordShow ? <VisibilityIcon /> : <VisibilityOffIcon />
+                            }
+                        </span>
+                    </div>
+
+                    <input type={passwordShow === true ? "text" : "password"} id="password" value={loginForm.password} onChange={handleLoginFormChange} name="password" />
                 </div>
                 <Link to="/signup" style={ForgotPassLinkStyle}>Forgot Password</Link>
                 <button className="login-btn" type="submit">Login</button>
