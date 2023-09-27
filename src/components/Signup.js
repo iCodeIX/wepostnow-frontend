@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import "./styles/Signup.css";
 import { useNavigate } from "react-router-dom";
-
+import { ColorRing } from "react-loader-spinner";
 //icons
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -23,6 +23,7 @@ const Signup = () => {
     const [error, setError] = useState("");
     const [passwordShow, setPasswordShow] = useState(false);
     const navigate = useNavigate();
+    const [showSpinner, setShowSpinner] = useState(false);
 
     const handleCreateFormChange = (e) => {
         const { name, value } = e.target;
@@ -63,18 +64,23 @@ const Signup = () => {
         e.preventDefault();
 
         if (handleFormValidation()) {
+            setShowSpinner(true);
             try {
                 const userCreate = await axios.post("/signup", createForm, { headers: { 'Content-Type': 'multipart/form-data' } })
                     .then((response) => {
+                        setShowSpinner(false);
                         return response.data;
                     })
                     .catch((err) => {
-                        setShowError(true);
+                        setShowSpinner(false);
                         setError(err.response.data.error);
+                        setShowError(true);
+                       
                     });
 
 
                 if (userCreate) {
+                    setShowSpinner(false);
                     navigate('/main');
                     localStorage.setItem('id', userCreate._id);
                 }
@@ -151,9 +157,16 @@ const Signup = () => {
                     <label htmlFor="avatar" className="text-light">Profile Photo</label>
                     <input type="file" id="profileImg" name="profileImg" onChange={handleCreateFormChange} />
                 </div>
-
-
                 <button className="signup-btn" type="submit">Create Account</button>
+                <ColorRing
+                    visible={showSpinner}
+                    height="80"
+                    width="80"
+                    ariaLabel="blocks-loading"
+                    wrapperStyle={{ position: "absolute" }}
+                    wrapperClass="blocks-wrapper"
+                    colors={['#1A72E8', '#FFE019', '#1A72E8', '#FFE019', '#1A72E8']}
+                />
             </form>
             <Link to="/login" style={LoginLinkStyle}>Log in instead</Link>
         </div>

@@ -44,7 +44,7 @@ const Login = () => {
             try {
                 const userCheck = await axios.post("/login", loginForm)
                     .then(response => {
-                        setShowSpinner(true);
+                        setShowSpinner(false);
                         return response.data;
                     })
                     .catch((err) => {
