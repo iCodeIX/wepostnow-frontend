@@ -15,7 +15,6 @@ const SearchUser = () => {
     const searchFormChange = (e) => {
         const searchTextInput = e.target.value;
         setSearchText(searchTextInput);
-
         setShowResult(true);
         fetchUsers(searchTextInput);
     }

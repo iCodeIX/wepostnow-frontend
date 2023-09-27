@@ -77,3 +77,9 @@
     padding: 10px;
     margin: 10px 0;
 }
+
+/*spinner */
+
+.spinner-container{
+    display: absolute;
+}

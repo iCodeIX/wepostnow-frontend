@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/Login.css";
-
+import { ColorRing } from "react-loader-spinner";
 //icons 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -20,6 +20,7 @@ const Login = () => {
     const [wrongPassDisp, setWrongPassDisp] = useState(false);
     const [error, setError] = useState("");
     const [passwordShow, setPasswordShow] = useState(false);
+    const [showSpinner, setShowSpinner] = useState(false);
 
     const handleLoginFormChange = (e) => {
 
@@ -40,15 +41,16 @@ const Login = () => {
             setError("Username or Password cannot be empty!")
         } else {
             try {
-
                 const userCheck = await axios.post("/login", loginForm)
                     .then(response => {
-
+                        setShowSpinner(true);
                         return response.data;
                     })
                     .catch((err) => {
                         setWrongPassDisp(true);
+                        setShowSpinner(false);
                         setError(err.response.data.error);
+
                     });
 
 
@@ -57,6 +59,7 @@ const Login = () => {
                     localStorage.setItem('id', userCheck.user._id);
                     localStorage.setItem('profileImg', userCheck.user.profileImg);
                 } else {
+                    setShowSpinner(false);
                     setWrongPassDisp(true);
                 }
             } catch (err) {
@@ -112,9 +115,19 @@ const Login = () => {
                 </div>
                 <Link to="/signup" style={ForgotPassLinkStyle}>Forgot Password</Link>
                 <button className="login-btn" type="submit">Login</button>
+                <ColorRing
+                    visible={showSpinner}
+                    height="80"
+                    width="80"
+                    ariaLabel="blocks-loading"
+                    wrapperStyle={{ position: "absolute" }}
+                    wrapperClass="blocks-wrapper"
+                    colors={['#1A72E8', '#FFE019', '#1A72E8', '#FFE019', '#1A72E8']}
+                />
             </form>
             <p className="nyam-text">Not yet a Member?</p>
             <Link to="/signup" style={SignUpLinkStyle}>Register here</Link>
+
         </div>
     )
 }
