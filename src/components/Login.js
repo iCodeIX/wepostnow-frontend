@@ -35,7 +35,7 @@ const Login = () => {
     const loginUser = async (e) => {
 
         e.preventDefault();
-
+        setShowSpinner(true);
         if (loginForm.username === "" || loginForm.password === "") {
             setWrongPassDisp(true);
             setError("Username or Password cannot be empty!")
