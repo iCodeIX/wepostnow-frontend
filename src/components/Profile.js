@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 import "./styles/Profile.css";
 import UserPosts from "./UserPosts";
 import { UserPostsContext } from "./UserContext";
@@ -173,20 +174,41 @@ const UpdatePassword = ({ id }) => {
                     </span>
                 </div>
 
+
                 <input type={passwordShow ? "text" : "password"} id="password" value={passwordForm.newPassword} onChange={handlePasswordChangeForm} name="newPassword" />
             </div>
-            <button className="change-pass-btn">Click to update</button>
+            <button className="change-pass-btn">Click to Change</button>
         </form>
     )
 }
 
+
+const LogoutModal = ({ setShowLogoutNotif }) => {
+    const navigate = useNavigate();
+
+    const logoutAccount = () => {
+        localStorage.removeItem('id')
+
+
+        navigate('/');
+    }
+    return (
+        <div className="logout-modal">
+            <p>Are you sure to logout your account?</p>
+            <div className="logout-btns">
+                <button className="logout-yes-btn" onClick={() => logoutAccount()}>Yes</button>
+                <button className="logout-no-btn" onClick={() => setShowLogoutNotif(false)}>No</button>
+            </div>
+        </div>
+    )
+}
 const Profile = () => {
     const c_id = localStorage.getItem("id");
     const { id } = useParams();
     const [user, setUser] = useState(null);
     const [toogleUpdateProfile, setToogleUpdateProfile] = useState(false);
     const [userPosts, setUserPosts] = useState(null);
-
+    const [showLogoutNotif, setShowLogoutNotif] = useState(false);
     useEffect(() => {
         fetchUser();
     }, []);
@@ -229,6 +251,13 @@ const Profile = () => {
 
                             {
                                 toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} gender={user.gender} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
+                            }
+                            <button className="logout-btn" onClick={() => setShowLogoutNotif(!showLogoutNotif)}>
+                                <span> Logout </span>
+                            </button>
+
+                            {
+                                showLogoutNotif && (<LogoutModal setShowLogoutNotif={setShowLogoutNotif} />)
                             }
                             <img className="user-profile-photo" src={user.profileImg} alt="profile" />
                             <div className="details-text-container">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/Login.css";
@@ -9,8 +9,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
 
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const [loginForm, setLoginForm] = useState({
         username: "",
         password: "",
@@ -21,6 +21,13 @@ const Login = () => {
     const [error, setError] = useState("");
     const [passwordShow, setPasswordShow] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false);
+    
+    const cookieId = localStorage.getItem("id");
+    useEffect(() => {
+        cookieId !== null && (navigate('/main'))
+    }, []);
+
+
 
     const handleLoginFormChange = (e) => {
 
@@ -58,7 +65,6 @@ const Login = () => {
                 if (userCheck) {
                     navigate('/main');
                     localStorage.setItem('id', userCheck.user._id);
-                    localStorage.setItem('profileImg', userCheck.user.profileImg);
                 } else {
                     setShowSpinner(false);
                     setWrongPassDisp(true);
@@ -90,6 +96,7 @@ const Login = () => {
     }
     return (
         <div className="login-container">
+
             <p className="welcome-text">Welcome back</p>
             <form className="login-form" onSubmit={loginUser}>
                 {wrongPassDisp && (

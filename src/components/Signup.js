@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles/Signup.css";
 import { useNavigate } from "react-router-dom";
 import { ColorRing } from "react-loader-spinner";
@@ -24,6 +24,12 @@ const Signup = () => {
     const [passwordShow, setPasswordShow] = useState(false);
     const navigate = useNavigate();
     const [showSpinner, setShowSpinner] = useState(false);
+    const cookieId = localStorage.getItem("id");
+
+    useEffect(() => {
+        cookieId !== null && (navigate('/main'))
+    }, []);
+
 
     const handleCreateFormChange = (e) => {
         const { name, value } = e.target;
@@ -75,7 +81,7 @@ const Signup = () => {
                         setShowSpinner(false);
                         setError(err.response.data.error);
                         setShowError(true);
-                       
+
                     });
 
 
