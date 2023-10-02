@@ -253,7 +253,7 @@ const Profile = () => {
                             }
 
                             {
-                                toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={"setToogleUpdateProfile"} bio={user.bio} gender={user.gender} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
+                                toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} gender={user.gender} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
                             }
                             <button className="logout-btn" onClick={() => setShowLogoutNotif(!showLogoutNotif)}>
                                 <span> Logout </span>
