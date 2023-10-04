@@ -1,0 +1,49 @@
+.convo-messages-list {
+    padding: 15px;
+    border: 5px solid var(--blue-color);
+    min-height: 100vh;
+}
+
+.receiver-divider {
+    border-bottom: 2px solid var(--blue-color);
+    padding: 5px;
+
+}
+
+.msgs-list {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.convo-receiver-photo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.convo-receiver-username {
+    font-size: 18px;
+    
+}
+
+.sender-msg {
+    color: var(--white-color);
+    background: var(--blue-color);
+    margin: 2px 0;
+    padding: 10px;
+    border-radius: 50px;
+    align-self: flex-end;
+    font-size: 14px;
+}
+
+.receiver-msg {
+    background: var(--black-color);
+    color: var(--white-color);
+    margin: 2px 0;
+    padding: 10px;
+    border-radius: 50px;
+    align-self: flex-start;
+    font-size: 14px;
+}

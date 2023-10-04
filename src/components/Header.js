@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import "./styles/Header.css";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { UserContext } from "./UserContext";
-
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 const SearchUser = () => {
     const [showResult, setShowResult] = useState(false);
     const [searchText, setSearchText] = useState("");
@@ -83,6 +83,9 @@ const Header = () => {
         <header>
             <img src={logo} className="logo icon" alt="site logo" />
             <SearchUser />
+            <Link to="/message">
+                <EmailOutlinedIcon style={{color:"white"}}/>
+            </Link>
             <Link to={`/profile/${id}`}>
                 <img className="profile-photo icon" src={user && user.profileImg} alt="user profile" />
             </Link>

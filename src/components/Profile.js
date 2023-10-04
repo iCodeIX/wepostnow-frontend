@@ -202,6 +202,45 @@ const LogoutModal = ({ setShowLogoutNotif }) => {
         </div>
     )
 }
+
+const MessageModal = ({ setShowMessageModal, sender, receiver }) => {
+
+    const [userMessage, setUserMessage] = useState({
+        sender: sender,
+        receiver: receiver,
+        message: ""
+    });
+
+
+    const handleMessageChangeForm = (e) => {
+        const msg = e.target.value;
+        setUserMessage({
+            ...userMessage,
+            message: msg
+        })
+    }
+
+    const createMessage = (e) => {
+        e.preventDefault();
+
+        axios.post("/send-message", userMessage)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch(err =>
+                console.log(err)
+            );
+    }
+
+    return (
+        <div className="message-modal-container">
+            <form className="message-form" onSubmit={createMessage}>
+                <textarea placeholder="Write your message" name="message" value={userMessage.message} onChange={handleMessageChangeForm}></textarea>
+                <button type="submit">S E N D</button>
+            </form>
+        </div>
+    )
+}
 const Profile = () => {
     const c_id = localStorage.getItem("id");
     const { id } = useParams();
@@ -209,6 +248,8 @@ const Profile = () => {
     const [toogleUpdateProfile, setToogleUpdateProfile] = useState(false);
     const [userPosts, setUserPosts] = useState(null);
     const [showLogoutNotif, setShowLogoutNotif] = useState(false);
+    const [showMessageModal, setShowMessageModal] = useState(false);
+
     useEffect(() => {
         fetchUser();
 
@@ -249,19 +290,29 @@ const Profile = () => {
                     <>
                         <div className="profile-details-container">
                             {
-                                c_id === id && (<button className="edit-profile-btn" onClick={() => { setToogleUpdateProfile(!toogleUpdateProfile) }}><EditNoteOutlinedIcon /><span>Update Profile</span></button>)
+                                c_id === id ? (<><button className="edit-profile-btn" onClick={() => { setToogleUpdateProfile(!toogleUpdateProfile) }}><EditNoteOutlinedIcon /><span>Update Profile</span></button>
+                                    <button className="logout-btn" onClick={() => setShowLogoutNotif(!showLogoutNotif)}>
+                                        <span> Logout </span>
+                                    </button>
+                                </>) : (
+                                    <button className="send-msg-btn" onClick={() => setShowMessageModal(!showMessageModal)}>
+                                        <span>Send Message </span>
+                                    </button>
+                                )
                             }
 
                             {
                                 toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} gender={user.gender} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
                             }
-                            <button className="logout-btn" onClick={() => setShowLogoutNotif(!showLogoutNotif)}>
-                                <span> Logout </span>
-                            </button>
 
                             {
                                 showLogoutNotif && (<LogoutModal setShowLogoutNotif={setShowLogoutNotif} />)
                             }
+
+                            {
+                                showMessageModal && (<MessageModal setShowMessageModal={setShowMessageModal} sender={c_id} receiver={id} />)
+                            }
+
                             <img className="user-profile-photo" src={user.profileImg} alt="profile" />
                             <div className="details-text-container">
                                 <p className="profile-name">

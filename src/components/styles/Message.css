@@ -1,0 +1,22 @@
+.message-container {
+    padding: 15px;
+    border: 5px solid var(--blue-color);
+    min-height: 100vh;
+}
+
+.convos-list {
+    margin: 20px 0 0 0;
+}
+
+.convo-item {
+    padding: 10px;
+    background: var(--blue-color);
+    border-radius: 5px;
+    margin: 5px 0 0 0;
+}
+
+.convo-receiver-photo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
