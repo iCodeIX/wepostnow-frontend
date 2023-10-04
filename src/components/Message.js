@@ -8,7 +8,7 @@ import "../components/styles/Message.css";
 const Message = () => {
     const sender_id = localStorage.getItem("id");
     const [convos, setConvos] = useState(null);
-    const [otherParti, setOtherParti] = useState(null);
+   
 
     useEffect(() => {
         fetchConversations();
