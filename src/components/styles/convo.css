@@ -1,16 +1,26 @@
-.convo-messages-list {
-    padding: 15px;
-    border: 5px solid var(--blue-color);
+.convos-container {
+    position: relative;
+    padding: 0 10px;
     min-height: 100vh;
+
 }
 
 .receiver-divider {
-    border-bottom: 2px solid var(--blue-color);
     padding: 5px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
 
 }
 
-.msgs-list {
+.convo-messages-list {
+    margin: 60px 0 0 0;
+    overflow-y: auto;
+    height: 500px;
+}
+
+.message-item {
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -25,7 +35,7 @@
 
 .convo-receiver-username {
     font-size: 18px;
-    
+
 }
 
 .sender-msg {
@@ -46,4 +56,30 @@
     border-radius: 50px;
     align-self: flex-start;
     font-size: 14px;
+}
+
+.convo-message-form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.convo-message-form textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 5px;
+    border: 1px solid var(--black-color);
+}
+
+.convo-message-form button {
+    background: var(--blue-color);
+    color: var(--white-color);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--blue-color);
+    cursor: pointer;
+    align-self: flex-end;
+    margin: 5px 0;
+
 }

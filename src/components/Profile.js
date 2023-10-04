@@ -211,7 +211,7 @@ const MessageModal = ({ setShowMessageModal, sender, receiver }) => {
         message: ""
     });
 
-
+    const navigate = useNavigate();
     const handleMessageChangeForm = (e) => {
         const msg = e.target.value;
         setUserMessage({
@@ -225,7 +225,7 @@ const MessageModal = ({ setShowMessageModal, sender, receiver }) => {
 
         axios.post("/send-message", userMessage)
             .then((response) => {
-                console.log(response.data);
+                navigate("/message");
             })
             .catch(err =>
                 console.log(err)
