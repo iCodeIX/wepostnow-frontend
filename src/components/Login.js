@@ -79,7 +79,7 @@ const Login = () => {
     const SignUpLinkStyle = {
         textDecoration: "none",
         color: "#1A72E8",
-        fontWeight: "600",
+        fontWeight: "700",
         fontSize: "14px",
         letterSpacing: "1px",
         margin: "10px"
