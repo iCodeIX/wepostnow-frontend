@@ -20,3 +20,19 @@
     height: 30px;
     border-radius: 50%;
 }
+
+.parti-username {
+    font-size: 14px;
+}
+
+.last-message {
+    color: var(--gray-color);
+    padding: 5px;
+    margin: 0 0 0 10px;
+    width: 250px;
+    display: block;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -58,6 +58,17 @@
     font-size: 14px;
 }
 
+.refresh-btn {
+    background: var(--success-bg-color)!important;
+    color: var(--white-color);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--blue-color);
+    cursor: pointer;
+    align-self: flex-end;
+    margin: 5px 0;
+}
+
 .convo-message-form {
     display: flex;
     flex-direction: column;

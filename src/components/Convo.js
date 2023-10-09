@@ -14,12 +14,14 @@ const Convo = () => {
     const { otherId, otherImg, otherUsername } = location.state;
     const messagesList = useRef(null);
 
+
     useEffect(() => {
         fetchMessages();
-
     }, []);
 
+
     useEffect(() => messagesList.current.scrollIntoView(false), [convoMessages]);
+
 
     const fetchMessages = () => {
 
@@ -52,7 +54,6 @@ const Convo = () => {
 
         axios.post("/send-message", userMessage)
             .then((response) => {
-                console.log(response.data);
                 fetchMessages();
                 setUserMessage({
                     ...userMessage,
@@ -65,6 +66,10 @@ const Convo = () => {
             );
 
 
+    }
+
+    const refreshMessages = () => {
+        fetchMessages();
     }
 
 
@@ -93,7 +98,9 @@ const Convo = () => {
                     )
                 }
             </ul>
+            <button className="refresh-btn" onClick={() => { refreshMessages() }}>Refresh Convo</button>
             <form className="convo-message-form" onSubmit={createMessage}>
+
                 <textarea placeholder="Write a message" value={userMessage.message} onChange={handleMessageChangeForm} />
                 <button type="submit">SEND</button>
             </form>

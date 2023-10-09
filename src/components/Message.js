@@ -8,7 +8,7 @@ import "../components/styles/Message.css";
 const Message = () => {
     const sender_id = localStorage.getItem("id");
     const [convos, setConvos] = useState(null);
-   
+
 
     useEffect(() => {
         fetchConversations();
@@ -44,7 +44,8 @@ const Message = () => {
                                                     <Link style={{ color: "#ffffff", display: "block", textDecoration: "none", width: "100%" }} to={`/convo/${convo._id}`} key={parti._id} state={{ otherId: parti._id, otherImg: parti.profileImg, otherUsername: parti.username }}>
                                                         <span>
                                                             <img className="convo-receiver-photo" src={parti.profileImg} />
-                                                            <span>{parti.username}</span>
+                                                            <span className="parti-username">{parti.username}</span>
+                                                            <span className="last-message">{convo.lastMessage} </span>
                                                         </span>
                                                     </Link>
 

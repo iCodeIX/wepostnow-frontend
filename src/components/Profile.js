@@ -222,7 +222,7 @@ const MessageModal = ({ setShowMessageModal, sender, receiver }) => {
 
     const createMessage = (e) => {
         e.preventDefault();
-
+    
         axios.post("/send-message", userMessage)
             .then((response) => {
                 navigate("/message");
