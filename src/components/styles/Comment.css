@@ -56,7 +56,7 @@
 .comments-list {
     max-height: 370px;
     overflow: auto;
-   
+
 }
 
 
@@ -73,6 +73,7 @@
 
 .comment-user-photo {
     width: 25px;
+    height: 25px;
     border-radius: 50%;
     align-self: baseline;
 }
