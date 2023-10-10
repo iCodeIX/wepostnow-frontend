@@ -4,13 +4,21 @@ import axios from "axios";
 import e from "cors";
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
-
+    const [displayLinkSent, setDisplayLinkSent] = useState(false);
+    const [error, setError] = useState(null);
     const sendResetLink = (e) => {
         e.preventDefault();
 
         axios.post("/forgot-password", { email })
             .then(response => {
-                console.log(response.data);
+                if (response.data.Status === "Success") {
+                    setDisplayLinkSent(true);
+                    setError(null);
+                    setEmail("");
+                } else {
+                    setError(response.data.Status);
+                    setDisplayLinkSent(false);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -25,8 +33,14 @@ const ForgotPassword = () => {
         <div className="forgot-pass-container">
             <h1>Reset Password</h1>
             <form className="reset-pass-form" onSubmit={sendResetLink}>
-                <label>A reset password link will be sent to your email address!</label>
+                <p>A reset password link will be sent to your email address!</p>
+                {
+                    error && (<label>{error}</label>)
+                }
                 <input type="email" value={email} placeholder="Enter your registered email" onChange={handleChangeEmail} />
+                {
+                    displayLinkSent && (<label>Reset Password Link sent to your email!</label>)
+                }
                 <button type="submit">SEND LINK</button>
             </form>
         </div>
