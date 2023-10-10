@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../components/styles/Message.css";
 
 
-
 const Message = () => {
     const sender_id = localStorage.getItem("id");
     const [convos, setConvos] = useState(null);
-
 
     useEffect(() => {
         fetchConversations();
@@ -24,6 +22,7 @@ const Message = () => {
     }
     return (
         <div className="message-container">
+           
             <h1>Messages</h1>
             <ul className="convos-list">
                 {

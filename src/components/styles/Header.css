@@ -99,3 +99,26 @@ header {
 .result-item {
     padding: 5px;
 }
+
+
+@media (min-width:526px) {
+
+    header {
+        border-bottom: 2px solid var(--light-color);
+        justify-content: end;
+        gap: 20px;
+        padding: 20px;
+    }
+    .search-form{
+        width: 300px;
+        margin-right: auto;
+        
+    }
+
+
+}
+
+@media (min-width:768px) {
+
+    
+}

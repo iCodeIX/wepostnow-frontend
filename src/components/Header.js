@@ -6,6 +6,7 @@ import "./styles/Header.css";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { UserContext } from "./UserContext";
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+
 const SearchUser = () => {
     const [showResult, setShowResult] = useState(false);
     const [searchText, setSearchText] = useState("");

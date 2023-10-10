@@ -80,6 +80,32 @@
 
 /*spinner */
 
-.spinner-container{
+.spinner-container {
     display: absolute;
+}
+
+
+@media (min-width:526px) {
+
+    .login-form{
+        width: 50%;
+    }
+
+}
+
+
+@media (min-width:526px) {
+
+    .login-form{
+        width: 50%;
+    }
+
+}
+
+@media (min-width:768px) {
+
+    .login-form{
+        width: 30%;
+    }
+
 }

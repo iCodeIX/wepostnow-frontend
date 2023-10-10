@@ -34,7 +34,8 @@
     flex-direction: column;
     gap: 10px;
     box-shadow: 0 0 5px var(--gray-color);
-    z-index: 99;
+    z-index: 199;
+
 
 }
 
@@ -102,4 +103,28 @@
     width: 300px;
     text-align: center;
     font-size: 0.8rem;
+}
+
+
+@media (min-width:526px) {
+
+    .newpost-containter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding:115px 50px 30px 50px;
+        
+    }
+
+    .post-btn{
+        width: 70%;
+    }
+
+}
+
+@media (min-width:768px) {
+    .post-btn{
+        width: 50%;
+        padding: 10px;
+    }
 }

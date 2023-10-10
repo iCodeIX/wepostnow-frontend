@@ -94,3 +94,21 @@ cursor: pointer;
     border: 1px solid var(--blue-color);
 
 }
+
+
+
+@media (min-width:526px) {
+
+    .signup-form{
+        width: 50%;
+    }
+
+}
+
+@media (min-width:768px) {
+
+    .signup-form{
+        width: 30%;
+    }
+
+}
