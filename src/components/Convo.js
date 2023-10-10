@@ -75,35 +75,41 @@ const Convo = () => {
 
     return (
         <div className="convos-container">
-            <div className="receiver-divider">
-                <img className="convo-receiver-photo" src={otherImg} />
-                <Link to={`/profile/${otherId}`} style={{ color: "#000000" }}>
-                    <span className="convo-receiver-username">
-                        {otherUsername}
-                    </span>
-                </Link>
+            <div className="convos-centered">
+                <div className="receiver-divider">
+                    <img className="convo-receiver-photo" src={otherImg} />
+                    <Link to={`/profile/${otherId}`} style={{ color: "#000000" }}>
+                        <span className="convo-receiver-username">
+                            {otherUsername}
+                        </span>
+                    </Link>
+                </div>
+                <ul className="convo-messages-list" ref={messagesList} >
+                    {
+                        convoMessages?.length > 0 && (
+                            convoMessages.map((message) => {
+                                return (
+                                    <li className="message-item" key={message._id} ref={messagesList}>
+
+                                        {userId === message.sender ? (<p className="sender-msg">{message.message}</p>) : (<p className="receiver-msg">{message.message}</p>)}
+
+                                    </li>
+                                )
+                            })
+                        )
+                    }
+                </ul>
+                <div className="bottom-btns">
+                    <button className="refresh-btn" onClick={() => { refreshMessages() }}>Refresh Convo</button>
+                    <form className="convo-message-form" onSubmit={createMessage}>
+
+                        <textarea placeholder="Write a message" value={userMessage.message} onChange={handleMessageChangeForm} />
+                        <button type="submit">SEND</button>
+                    </form>
+                </div>
+
             </div>
-            <ul className="convo-messages-list" ref={messagesList} >
-                {
-                    convoMessages?.length > 0 && (
-                        convoMessages.map((message) => {
-                            return (
-                                <li className="message-item" key={message._id} ref={messagesList}>
 
-                                    {userId === message.sender ? (<p className="sender-msg">{message.message}</p>) : (<p className="receiver-msg">{message.message}</p>)}
-
-                                </li>
-                            )
-                        })
-                    )
-                }
-            </ul>
-            <button className="refresh-btn" onClick={() => { refreshMessages() }}>Refresh Convo</button>
-            <form className="convo-message-form" onSubmit={createMessage}>
-
-                <textarea placeholder="Write a message" value={userMessage.message} onChange={handleMessageChangeForm} />
-                <button type="submit">SEND</button>
-            </form>
         </div>
     )
 }
