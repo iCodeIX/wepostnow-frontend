@@ -6,6 +6,8 @@ import Profile from "./Profile";
 import Message from "./Message";
 import PageNotFound from "./PageNotFound";
 import Convo from "./Convo";
+import ForgotPassword from "./ForgotPassword";
+import ResetPassword from "./ResetPassword";
 import "./styles/App.css";
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
         <Route path='/profile/:id' element={<Profile />}></Route>
         <Route path="/message" element={<Message />}></Route>
         <Route path="/convo/:convo_id" element={<Convo />}></Route>
+        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route path="/reset-password/:id/:token" element={<ResetPassword />}></Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div >

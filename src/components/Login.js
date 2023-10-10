@@ -121,7 +121,7 @@ const Login = () => {
 
                     <input type={passwordShow === true ? "text" : "password"} id="password" value={loginForm.password} onChange={handleLoginFormChange} name="password" />
                 </div>
-                <Link to="/signup" style={ForgotPassLinkStyle}>Forgot Password</Link>
+                <Link to="/forgot-password" style={ForgotPassLinkStyle}>Forgot Password</Link>
                 <button className="login-btn" type="submit">Login</button>
                 <ColorRing
                     visible={showSpinner}
