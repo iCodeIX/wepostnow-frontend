@@ -15,7 +15,7 @@ const ResetPassword = () => {
     const sendResetLink = (e) => {
         e.preventDefault();
 
-        if (handleFormValidation) {
+        if (handleFormValidation()) {
             axios.post(`/reset-password/${id}/${token}`, { password })
                 .then(response => {
                     if (response.data.Status === "Success") {
