@@ -4,6 +4,9 @@ import LazyLoad from 'react-lazy-load';
 import Comment from "./Comment";
 import { UserPostsContext } from "./UserContext";
 import { useContext } from "react";
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
+
 
 const UserPosts = () => {
 
@@ -85,7 +88,12 @@ const UserPosts = () => {
                     }
                     )
 
-                ) : (<p>No posts to show right</p>)
+                ) : (
+                    <Stack spacing={1}>
+                        <Skeleton animation="wave" variant="circular" width={50} height={50} />
+                        <Skeleton animation="wave" variant="h1" style={{ width: "100%", height: "300px" }} />
+                        <Skeleton animation="wave" variant="h1" style={{ width: "100%", height: "100px" }} />
+                    </Stack>)
             }
 
 

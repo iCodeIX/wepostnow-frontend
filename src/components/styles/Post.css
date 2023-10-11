@@ -81,6 +81,7 @@
 @media (min-width:526px) {}
 
 @media (min-width:768px) {
+
     .posts-list {
         width: 100%;
         display: flex;
@@ -89,7 +90,17 @@
         justify-content: center;
     }
 
+
+    .LazyLoad {
+        width: 50%;
+        height: auto;
+    }
+
+    .MuiStack-root {
+        width: 50%;
+    }
+
     .post-item {
-        width: 600px;
+        width: 100%;
     }
 }

@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import "../components/styles/ForgotPassword.css";
 import axios from "axios";
-import e from "cors";
+import { validateEmail } from "../utility/utils";
+
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [displayLinkSent, setDisplayLinkSent] = useState(false);
     const [error, setError] = useState(null);
+
     const sendResetLink = (e) => {
         e.preventDefault();
+
+
 
         axios.post("/forgot-password", { email })
             .then(response => {
@@ -23,7 +27,10 @@ const ForgotPassword = () => {
             .catch(err => {
                 console.log(err);
             })
+
+
     }
+
 
     const handleChangeEmail = (e) => {
         const email = e.target.value;
