@@ -65,6 +65,14 @@ const Post = () => {
                                         {getTime(post.createdAt)}
                                     </span>
                                     <p className="post-content">{post.postContent}</p>
+                                    {
+                                        post.postImage && (
+                                            <div className="post-image-container">
+                                                <img className="post-image" src={post.postImage} alt="post img" />
+                                            </div>
+                                        )
+
+                                    }
                                     <Comment postId={post._id} userId={userId} />
                                 </li>
                             </LazyLoad>

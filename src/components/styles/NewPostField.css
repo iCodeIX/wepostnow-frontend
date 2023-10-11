@@ -22,11 +22,11 @@
 
 .newpostfield-container {
     padding: 20px;
-    position: absolute;
+    position: fixed;
     width: 80%;
-    height: 270px;
+    height: auto;
     background: var(--white-color);
-    top: 35%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 5px;
@@ -68,18 +68,57 @@
 
 }
 
+.post-image-container {
+    border: 2px solid var(--black-color);
+    background: var(--darkgray-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    width: 100%;
+    padding: 25px;
+    position: relative;
+
+}
+
+
+.remove-image-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    background: var(--warning-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50%;
+
+}
+
+.post-image-container img {
+    width: 250px;
+    border-radius: 5px;
+    background: var(--white-color);
+
+
+}
+
 .form-textarea-input {
     width: 100%;
-    height: 150px;
     padding: 10px;
     border-radius: 5px;
+}
+
+.insert-photo-btn {
+    align-self: flex-end;
 }
 
 .newpost-btn {
     width: 30%;
     align-self: flex-end;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
     background: var(--blue-color);
     color: var(--white-color);
     outline: 0;
@@ -112,19 +151,27 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding:115px 50px 30px 50px;
-        
+        padding: 115px 50px 30px 50px;
+
     }
 
-    .post-btn{
+    .post-btn {
+        width: 70%;
+    }
+
+    .newpostfield-container {
         width: 70%;
     }
 
 }
 
 @media (min-width:768px) {
-    .post-btn{
+    .post-btn {
         width: 50%;
         padding: 10px;
+    }
+
+    .newpostfield-container {
+        width: 50%;
     }
 }
