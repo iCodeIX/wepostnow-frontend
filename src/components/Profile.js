@@ -16,7 +16,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 //helper functions 
-import { validatePassword } from "../utility/utils";
+import { validatePassword } from "../utility/formValidation";
 
 const UpdateProfile = ({ c_id, setToogleUpdate, bio, gender, profileImg, fetchUser, fetchAllPosts }) => {
     const [photoPrevFile, setPhotoPrevFile] = useState(null);

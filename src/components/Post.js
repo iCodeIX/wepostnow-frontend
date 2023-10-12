@@ -1,60 +1,134 @@
-import { Link } from "react-router-dom";
+import { Link, useAsyncError } from "react-router-dom";
 import "./styles/Post.css";
 import LazyLoad from 'react-lazy-load';
 import Comment from "./Comment";
 import { PostContext } from "./UserContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { getTime, getDate } from '../utility/format';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ShareIcon from '@mui/icons-material/Share';
+import axios from "axios";
 
 
-const Post = () => {
+const PostOptions = ({ setToogleOptions, post_id, fetchPosts, user_id, poster_id, showDeleteModal, setShowDeleteModal }) => {
+
+    return (
+        <div className="options-container">
+            {
+                user_id === poster_id && (
+                    <div className="options-item">
+                        <div className="edit-btn">
+                            <EditIcon style={{ color: "fff", fontSize: "20px" }} />
+                            <Link to={`/edit_post/${post_id}`} style={{ color: "#fff", textDecoration: "none", width: "100%" }}>Edit</Link>
+                        </div>
+                    </div>)
+            }
+            {
+                user_id === poster_id && (
+                    <div className="options-item">
+                        <div className="delete-btn" onClick={() => { setShowDeleteModal(!showDeleteModal); }}>
+                            <DeleteForeverIcon style={{ color: "fff", fontSize: "20px" }} />
+                            <Link to="" style={{ color: "#fff", textDecoration: "none", width: "100%" }}>Delete</Link>
+                        </div>
+                    </div>)
+            }
+            <div className="options-item">
+                <div className="share-btn">
+                    <ShareIcon style={{ color: "fff", fontSize: "20px" }} />
+                    <Link to={`/edit_post/${post_id}`} style={{ color: "#fff", textDecoration: "none", width: "100%" }}>Share</Link>
+                </div>
+            </div>
+            {
+                showDeleteModal && (<DeletePostModal setToogleOptions={setToogleOptions} fetchPosts={fetchPosts} setShowDeleteModal={setShowDeleteModal} post_id={post_id} />)
+            }
+
+
+        </div>
+    )
+}
+
+
+export const DeletePostModal = ({ setToogleOptions, fetchPosts, setShowDeleteModal, post_id }) => {
+
+    const closeModal = () => {
+        setShowDeleteModal(false);
+    }
+
+
+    const deletePost = () => {
+
+
+        axios.post("/delete-post", { post_id })
+            .then((response) => {
+                console.log(response);
+                fetchPosts();
+                setShowDeleteModal(false);
+                setToogleOptions(false);
+            })
+            .catch(err => console.log(err));
+    }
+
+
+    return (
+        <div className="delete-post-container">
+            <p>Are you sure to delete this post?</p>
+            <div className="delete-post-btns">
+                <button className="yes-btn" onClick={() => deletePost()}>Yes</button>
+                <button className="no-btn" onClick={() => closeModal()}>No</button>
+            </div>
+        </div>
+
+    )
+}
+
+
+const Post = ({ fetchPosts }) => {
 
     const userId = localStorage.getItem('id');
     const { posts } = useContext(PostContext);
-
-    function getDate(str) {
-        const date = new Date(str.slice(0, 10));
-        const days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
-        const months = ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
-
-        const day = days[date.getDay()];
-        const month = months[date.getMonth()];
-        const d = date.getDate();
-
-        return `${day}, ${month} ${d}, ${date.getFullYear()}`;
-    }
-
-    function getTime(str) {
-        let newStr = str.substring(11, 19);
-        let addTime = 8 + Number(newStr[0] + newStr[1]);
-        let removedHour = newStr.substring(2, 9);
-        let aMpM = "";
-
-        aMpM = addTime >= 12 ? " PM" : " AM";
-        addTime = addTime > 12 ? "0" + String(addTime - 12) : String(0) + addTime;
-        addTime = addTime > 9 ? addTime.substring(1, 3) : addTime;
-
-        return addTime + removedHour + aMpM;
-    }
-
-
+    const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+    const [toogleOptions, setToogleOptions] = useState(false);
     const profileLinkStyle = {
         width: "auto",
         textDecoration: "none"
 
     }
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    useEffect(() => {
+        if (toogleOptions === false) {
+            setShowDeleteModal(false);
+        }
+
+    }, [toogleOptions]);
+
+
+
     return (
 
         <ul className="posts-list">
             {
 
                 posts?.length > 0 ? (
-                    posts.map(function (post) {
-
+                    posts.map(function (post, index) {
+                        const showOptions = selectedItemIndex === index;
                         return (
                             <LazyLoad key={post._id}>
                                 <li className="post-item" key={post._id}>
+                                    {
+                                        showOptions && toogleOptions ? (
+                                            <PostOptions post_id={post._id} fetchPosts={fetchPosts} setToogleOptions={setToogleOptions} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} user_id={userId} poster_id={post["user"]._id} />
+                                        ) :
+                                            (<></>)
+                                    }
+                                    <div className="post-options-btn" onClick={() => { setSelectedItemIndex(index); setToogleOptions(!toogleOptions); }}>
+                                        <MoreHorizIcon style={{ fontSize: "36px" }} />
+                                    </div>
+
                                     <div className="link-container">
                                         <Link to={`/profile/${post["user"]._id}`} style={profileLinkStyle}>
                                             <img className="post-user--photo" alt={post["user"].username} src={post["user"].profileImg} />
@@ -90,12 +164,12 @@ const Post = () => {
                         <Skeleton animation="wave" variant="h1" style={{ width: "100%", height: "300px" }} />
                         <Skeleton animation="wave" variant="h1" style={{ width: "100%", height: "50px" }} />
                     </Stack>
-                    )
+                )
             }
 
 
 
-        </ul>
+        </ul >
 
     )
 }

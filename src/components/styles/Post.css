@@ -2,6 +2,7 @@
     padding: 15px;
 }
 
+
 .userposts-text {
     color: var(--darkgray-color);
     font-size: 14px;
@@ -19,6 +20,86 @@
     border-radius: 5px;
     box-shadow: 0 0 2px var(--black-color);
     width: 100%;
+    position: relative;
+}
+
+.post-options-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.options-container {
+    background: var(--darkgray-color);
+    width: 50%;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 100;
+
+}
+
+.options-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--darkgray-color);
+    padding: 10px;
+    border-bottom: 1px solid var(--white-color);
+
+
+}
+
+.delete-btn,
+.edit-btn,
+.share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.delete-post-container {
+    position: absolute;
+    background: var(--warning-bg-color);
+    padding: 10px;
+    border-radius: 5px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+}
+
+.delete-post-container p {
+    color: var(--white-color);
+    padding: 10px;
+}
+
+.delete-post-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    z-index: 9999;
+}
+
+.delete-post-btns button {
+    padding: 5px;
+    padding: 10px;
+    cursor: pointer;
+
+
+}
+
+.yes-btn {
+    color: var(--warning-bg-color);
+}
+
+.no-btn {
+    color: var(--blue-color);
 }
 
 .link-container {

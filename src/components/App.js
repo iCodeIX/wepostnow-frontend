@@ -8,6 +8,7 @@ import PageNotFound from "./PageNotFound";
 import Convo from "./Convo";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
+import EditPost from "./EditPost";
 import "./styles/App.css";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/convo/:convo_id" element={<Convo />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
         <Route path="/reset-password/:id/:token" element={<ResetPassword />}></Route>
+        <Route path="/edit_post/:post_id" element={<EditPost />}></Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div >

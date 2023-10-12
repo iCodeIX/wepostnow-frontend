@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 //helper functions
-import { validatePassword } from "../utility/utils";
+import { validatePassword } from "../utility/formValidation";
 const ResetPassword = () => {
 
     const [password, setPassword] = useState("");

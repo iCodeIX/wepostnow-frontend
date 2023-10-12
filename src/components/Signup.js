@@ -9,7 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 //helper functions
-import { validateUsername, validateEmail, validatePassword } from "../utility/utils";
+import { validateUsername, validateEmail, validatePassword } from "../utility/formValidation";
 
 const Signup = () => {
     const [createForm, setCreateForm] = useState({

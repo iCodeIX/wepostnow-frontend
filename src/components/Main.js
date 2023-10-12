@@ -51,7 +51,7 @@ const Main = () => {
             </UserContext.Provider>
             <PostContext.Provider value={{ posts, setPosts }}>
                 <NewPostField fetchPosts={fetchAllPosts} />
-                <Post />
+                <Post fetchPosts={fetchAllPosts} />
             </PostContext.Provider>
         </div>
     )
