@@ -82,11 +82,13 @@ const NewPostField = ({ fetchPosts }) => {
 
 
     }
-    return (
+    return (<div className="newpost-container-bg-container">
         <div className="newpost-containter">
             <button className="post-btn" onClick={() => setToogleNewPostForm(true)}>What's on your mind?</button>
-            {
-                toogleNewPostForm && (
+        </div>
+        {
+            toogleNewPostForm && (
+                <div className="newpostfield-container-bg">
                     <div className="newpostfield-container">
                         <button className="cancelpost-btn" onClick={() => setToogleNewPostForm(!toogleNewPostForm)}><CloseOutlinedIcon /></button>
                         <form className="newpost-form" onSubmit={addPost}>
@@ -122,15 +124,18 @@ const NewPostField = ({ fetchPosts }) => {
                             />
                         </form>
                     </div>
-                )
-            }
-            {
-                notifyPosted && (
-                    <p className="notify-posted"> Message posted!</p>
+                </div>
 
-                )
-            }
-        </div>
+            )
+        }
+        {
+            notifyPosted && (
+                <p className="notify-posted"> Message posted!</p>
+
+            )
+        }
+    </div>
+
     )
 }
 

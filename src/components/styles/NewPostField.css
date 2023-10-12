@@ -20,9 +20,23 @@
 
 /* post pop up form */
 
+.newpost-container-bg-container {
+    position: relative;
+}
+
+.newpostfield-container-bg {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--black-color);
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.8);
+}
+
 .newpostfield-container {
     padding: 20px;
-    position: fixed;
+    position: absolute;
     width: 80%;
     height: auto;
     background: var(--white-color);
@@ -36,8 +50,10 @@
     box-shadow: 0 0 5px var(--gray-color);
     z-index: 199;
 
-
 }
+
+
+
 
 .cancelpost-btn {
     align-self: flex-end;
@@ -164,6 +180,10 @@
         width: 70%;
     }
 
+    .form-textarea textarea {
+        height: 100px;
+    }
+
 }
 
 @media (min-width:768px) {
@@ -174,5 +194,11 @@
 
     .newpostfield-container {
         width: 50%;
+        top: 50%;
+    }
+
+
+    .form-textarea textarea {
+        height: 150px;
     }
 }
