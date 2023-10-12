@@ -22,11 +22,11 @@ const Message = () => {
     }
     return (
         <div className="message-container">
-           
+
             <h1>Messages</h1>
             <ul className="convos-list">
                 {
-                    convos?.length > 0 && (
+                    convos?.length > 0 ? (
 
                         convos.map((convo) => {
 
@@ -60,7 +60,7 @@ const Message = () => {
                         })
 
 
-                    )
+                    ) : (<p>You dont have messages yet!</p>)
                 }
             </ul>
         </div >
