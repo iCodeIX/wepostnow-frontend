@@ -6,6 +6,9 @@ import "./styles/Profile.css";
 import UserPosts from "./UserPosts";
 import { UserPostsContext } from "./UserContext";
 
+//libraries
+import { ColorRing } from "react-loader-spinner";
+
 //icons and images
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
@@ -28,21 +31,24 @@ const UpdateProfile = ({ c_id, setToogleUpdate, bio, gender, profileImg, fetchUs
         gender: gender
     });
 
+    const [showSpinner, setShowSpinner] = useState(false);
 
     const photoPrevUrl = photoPrevFile !== null && URL.createObjectURL(photoPrevFile);
 
     const updateProfile = (e) => {
         e.preventDefault();
+        setShowSpinner(true);
         axios.post("/update-profile", updateForm, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then((response) => {
                 setUpdateForm(response.data);
                 setToogleUpdate(false);
                 fetchUser();
                 fetchAllPosts();
-
+                setShowSpinner(false);
             })
             .catch((err) => {
                 console.log(err);
+                setShowSpinner(false);
             })
 
     }
@@ -100,7 +106,15 @@ const UpdateProfile = ({ c_id, setToogleUpdate, bio, gender, profileImg, fetchUs
                 <label>Bio:</label>
                 <textarea className="updatedBioTextArea" name="updatedBio" value={updateForm.bio} onChange={handleUpdateForm}></textarea>
                 <button className="updateProfile-btn" type="submit">Update</button>
-
+                <ColorRing
+                    visible={showSpinner}
+                    height="80"
+                    width="80"
+                    ariaLabel="blocks-loading"
+                    wrapperStyle={{ position: "absolute" }}
+                    wrapperClass="blocks-wrapper"
+                    colors={['#1A72E8', '#FFE019', '#1A72E8', '#FFE019', '#1A72E8']}
+                />
             </form>
             <button className="change-pass-toogle-btn" onClick={() => setShowUpdatePassword(!showUpdatePassword)}>Change Password?</button>
             {
@@ -118,7 +132,9 @@ const UpdatePassword = ({ id }) => {
         userId: id
     });
     const [displayChangePassStatus, setDisplayChangePassStatus] = useState("");
+    const [showSpinner, setShowSpinner] = useState(false);
 
+    const navigate = useNavigate();
 
     const handlePasswordChangeForm = (e) => {
         const { name, value } = e.target;
@@ -130,21 +146,34 @@ const UpdatePassword = ({ id }) => {
         )
     }
 
+    const backToLogin = () => {
+        setTimeout(() => {
+            localStorage.removeItem('id');
+            navigate("/login");
 
+        }, 3000);
+    }
     const updatePassword = (e) => {
         e.preventDefault();
+        setShowSpinner(true);
 
         if (validateFormPassword()) {
             setDisplayChangePassStatus("");
+
             const checkSuccessUpdate = axios.post("/update-password", passwordForm)
                 .then((response) => {
                     if (response.status === 200) {
-                        setDisplayChangePassStatus("Password change success! You will be logout in 3scs!")
+                        setShowSpinner(false);
+                        setDisplayChangePassStatus("Password change success! You will be logout in 3scs!");
+                        backToLogin();
                     }
                 })
                 .catch((err) => {
+                    setShowSpinner(false);
                     setDisplayChangePassStatus(err.response.data.message);
                 })
+        } else {
+            setShowSpinner(false);
         }
     }
 
@@ -178,6 +207,15 @@ const UpdatePassword = ({ id }) => {
                 <input type={passwordShow ? "text" : "password"} id="password" value={passwordForm.newPassword} onChange={handlePasswordChangeForm} name="newPassword" />
             </div>
             <button className="change-pass-btn">Click to Change</button>
+            <ColorRing
+                visible={showSpinner}
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{ position: "absolute" }}
+                wrapperClass="blocks-wrapper"
+                colors={['#1A72E8', '#FFE019', '#1A72E8', '#FFE019', '#1A72E8']}
+            />
         </form>
     )
 }
