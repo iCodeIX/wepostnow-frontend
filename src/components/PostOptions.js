@@ -16,15 +16,6 @@ const PostOptions = ({ setToogleOptions, post_id, fetchPosts, user_id, poster_id
             {
                 user_id === poster_id && (
                     <div className="options-item">
-                        <div className="edit-btn">
-                            <EditIcon style={{ color: "fff", fontSize: "20px" }} />
-                            <Link to={`/edit_post/${post_id}`} style={{ color: "#fff", textDecoration: "none", width: "100%" }}>Edit</Link>
-                        </div>
-                    </div>)
-            }
-            {
-                user_id === poster_id && (
-                    <div className="options-item">
                         <div className="delete-btn" onClick={() => { setShowDeleteModal(!showDeleteModal); }}>
                             <DeleteForeverIcon style={{ color: "fff", fontSize: "20px" }} />
                             <Link to="" style={{ color: "#fff", textDecoration: "none", width: "100%" }}>Delete</Link>
