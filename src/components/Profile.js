@@ -222,7 +222,7 @@ const MessageModal = ({ setShowMessageModal, sender, receiver }) => {
 
     const createMessage = (e) => {
         e.preventDefault();
-    
+
         axios.post("/send-message", userMessage)
             .then((response) => {
                 navigate("/message");
@@ -256,7 +256,7 @@ const Profile = () => {
     }, []);
 
     useEffect(() => {
-        fetchAllPosts();
+        fetchUserPosts();
 
     }, []);
 
@@ -271,7 +271,7 @@ const Profile = () => {
 
     }
 
-    const fetchAllPosts = async () => {
+    const fetchUserPosts = async () => {
 
         await axios.get("/posts/userposts/" + id)
             .then((response) => {
@@ -302,7 +302,7 @@ const Profile = () => {
                             }
 
                             {
-                                toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} gender={user.gender} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchAllPosts} />
+                                toogleUpdateProfile && <UpdateProfile c_id={c_id} setToogleUpdate={setToogleUpdateProfile} bio={user.bio} gender={user.gender} profileImg={user.profileImg} fetchUser={fetchUser} fetchAllPosts={fetchUserPosts} />
                             }
 
                             {
@@ -326,7 +326,7 @@ const Profile = () => {
                         {
                             userPosts?.length > 0 ? (
                                 <UserPostsContext.Provider value={userPosts}>
-                                    <UserPosts />
+                                    <UserPosts fetchUserPosts={fetchUserPosts} />
                                 </UserPostsContext.Provider>)
                                 : (<div className="no-posts-container">
                                     <span className="no-posts">User has no post to show!</span>

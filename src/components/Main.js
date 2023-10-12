@@ -1,9 +1,12 @@
-import "./styles/Main.css";
-import Post from "./Post";
-import NewPostField from "./NewPostField";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "./styles/Main.css";
+
+//components
 import Header from "./Header";
+import Post from "./Post";
+import NewPostField from "./NewPostField";
+//context
 import { UserContext } from "./UserContext";
 import { PostContext } from "./UserContext";
 
